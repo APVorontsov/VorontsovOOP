@@ -18,7 +18,7 @@ int main()
 	listA.PushBack( 1 );
 	listA.PushBack( 2 );
 	listA.PushBack( 3 );
-/*	std::cout << "size equals to " << listA.GetSize() << std::endl;
+	std::cout << "size equals to " << listA.GetSize() << std::endl;
 	std::cout << listA.GetBackData() << std::endl;
 	listA.PopBack();
 	std::cout << listA.GetBackData() << std::endl;
@@ -73,8 +73,8 @@ int main()
 	std::cout << it->GetData() << std::endl;
 	listD.PopFront();
 	listD.PopFront();
-	*/
-	if(MemoryWatcher::Datas == 0 && MemoryWatcher::Links == 0)
+	
+	if( MemoryWatcher::Datas == 0 && MemoryWatcher::Links == 0 )
 		std::cout << "seems like there are no leaks here" << std::endl;
 	return 0;
 }
