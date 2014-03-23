@@ -106,15 +106,17 @@ T & XList<T> :: GetFrontData()
 }
 
 template <class T>
-XLink<T> * XList<T> :: GetBackLink()
+XIterator<T> XList<T> :: GetBackIterator()
 {
-	return m_Back;
+	XIterator<T> it( m_Back );
+	return it;
 }
 
 template <class T>
-XLink<T> * XList<T> :: GetFrontLink()
+XIterator<T> XList<T> :: GetFrontIterator()
 {
-	return m_Front;
+	XIterator<T> it( m_Front );
+	return it;
 }
 
 template <class T>

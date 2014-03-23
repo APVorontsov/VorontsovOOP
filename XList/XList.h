@@ -19,35 +19,6 @@ private:
 };
 
 template <class T>
-class XList
-{
-public:
-	void PushFront( T const & NewElement );
-	void PushBack( T const & NewElement );	
-	void PopFront();
-	void PopBack();
-
-	T & GetFrontData();
-	T & GetBackData();
-	XLink<T> * GetFrontLink();
-	XLink<T> * GetBackLink();
-
-	int GetSize();
-	bool IsEmpty();
-	void Erase();
-
-	XList();
-	~XList();
-	  
-private:
-	XLink<T> * m_Front;
-	XLink<T> * m_Back;
-
-	int m_Size;
-
-};
-
-template <class T>
 class XIterator
 {
 public:
@@ -61,6 +32,34 @@ public:
 
 private:
 	XLink<T> *  m_Iterator;
+};
+
+template <class T>
+class XList
+{
+public:
+	void PushFront( T const & NewElement );
+	void PushBack( T const & NewElement );	
+	void PopFront();
+	void PopBack();
+
+	T & GetFrontData();
+	T & GetBackData();
+	XIterator<T> GetFrontIterator();
+	XIterator<T> GetBackIterator();
+
+	int GetSize();
+	bool IsEmpty();
+	void Erase();
+
+	XList();
+	~XList();
+	  
+private:
+	XLink<T> * m_Front;
+	XLink<T> * m_Back;
+
+	int m_Size;
 };
 
 #include "XList.cpp"

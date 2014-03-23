@@ -30,29 +30,30 @@ int main()
 	listA.PopBack();
 	if (listA.IsEmpty())
 		std::cout << "list A is empty" << std::endl;
+	std::cout << "size of list A equals to " << listA.GetSize() << std::endl;
 
 	XList <char> listB;
-	XLink <char> * it;
+	XIterator <char>  it;
 	listB.PushBack('a');
 	listB.PushBack('b');
 	listB.PushBack('c');
-	it = listB.GetBackLink();
-	std::cout << it->GetData() << std::endl;
-	it = it->GetPrevPointer();
-	std::cout << it->GetData() << std::endl;
-	it = it->GetPrevPointer();
-	std::cout << it->GetData() << std::endl;
+	it = listB.GetBackIterator();
+	std::cout << *it << std::endl;
+	--it;
+	std::cout << *it << std::endl;
+	--it;
+	std::cout << *it << std::endl;
 	listB.Erase();
 	if (listB.IsEmpty())
 		std::cout << "list B is empty" << std::endl;
 
 	XList <std::string> listC;
 	listC.PushBack("lol");
-	std::cout << listC.GetBackData() << std::endl;
-	listC.GetBackLink()->GetData() = "ololo";
-	std::cout << listC.GetBackData() << std::endl;
+	std::cout << *listC.GetBackIterator() << std::endl;
+	*listC.GetBackIterator() = "ololo";
+	std::cout << *listC.GetBackIterator() << std::endl;
 	listC.GetBackData() = "trololo";
-	std::cout << listC.GetBackData() << std::endl;
+	std::cout << *listC.GetBackIterator() << std::endl;
 	listC.Erase();
 	if (listC.IsEmpty())
 		std::cout << "list C is empty" << std::endl;
@@ -67,10 +68,10 @@ int main()
 	std::cout << listD.GetFrontData() << std::endl;
 	listD.GetFrontData() = 'd';
 	std::cout << listD.GetFrontData() << std::endl;
-	it = listD.GetFrontLink();
-	std::cout << it->GetData() << std::endl;
-	it = it->GetNextPointer();
-	std::cout << it->GetData() << std::endl;
+	it = listD.GetFrontIterator();
+	std::cout << *it << std::endl;
+	++it;
+	std::cout << *it << std::endl;
 	listD.PopFront();
 	listD.PopFront();
 	if (listD.IsEmpty())
@@ -82,7 +83,7 @@ int main()
 	listE.PushBack(2.71);
 	listE.PushBack(3.14);
 	XIterator< double > itE;
-	itE = listE.GetFrontLink();
+	itE = listE.GetFrontIterator();
 	std::cout << *itE << std::endl;
 	++itE;
 	std::cout << *itE << std::endl;
