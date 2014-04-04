@@ -17,7 +17,6 @@ template <class T>
 void XList<T> :: PushBack( T const & NewElement )
 {
 	XLink<T> * newLink = new XLink<T>( NewElement, m_Back, NULL );
-	++MemoryWatcher :: Links;
 
 	if ( m_Size == 0 )
 		m_Front = m_Back = newLink;
@@ -33,7 +32,38 @@ template <class T>
 void XList<T> :: PushFront( T const & NewElement )
 {
 	XLink<T> * newLink = new XLink<T>( NewElement, NULL, m_Front );
-	++MemoryWatcher :: Links;
+
+	if( m_Size == 0 )
+	{
+		m_Front = m_Back = newLink;
+	}
+	else
+	{
+		m_Front -> SetPrev( newLink );
+		m_Front = newLink;
+	}
+	++m_Size;
+}
+
+template <class T>
+void XList<T> :: PushBack( T * const & NewElement )
+{
+	XLink<T> * newLink = new XLink<T>( NewElement, m_Back, NULL );
+
+	if ( m_Size == 0 )
+		m_Front = m_Back = newLink;
+	else
+	{
+		m_Back -> SetNext( newLink );
+		m_Back = newLink;
+	}
+	++m_Size;
+}
+
+template <class T>
+void XList<T> :: PushFront( T * const & NewElement )
+{
+	XLink<T> * newLink = new XLink<T>( NewElement, NULL, m_Front );
 
 	if( m_Size == 0 )
 	{
@@ -57,14 +87,13 @@ void XList<T> :: PopBack()
 		case 1:
 			delete m_Back;
 			m_Back = m_Front = NULL;
-			--MemoryWatcher :: Links;
 			--m_Size;
 			return;
 		default:
-			auto temp = m_Back -> GetPrevPointer();
+			XLink<T> * temp = m_Back -> GetPrevPointer();
 			delete m_Back;
 			m_Back = temp;
-			--MemoryWatcher :: Links;
+			temp -> SetNext(NULL);
 			--m_Size;
 			return;
 	}
@@ -80,14 +109,13 @@ void XList<T> :: PopFront()
 	case 1:
 		delete m_Front;
 		m_Front = m_Back = NULL;
-		--MemoryWatcher :: Links;
 		--m_Size;
 		return;
 	default:
-		auto temp = m_Front -> GetNextPointer();
+		XLink<T> * temp = m_Front -> GetNextPointer();
 		delete m_Front;
 		m_Front = temp;
-		--MemoryWatcher :: Links;
+		temp -> SetPrev(NULL);
 		--m_Size;
 		return;
 	}

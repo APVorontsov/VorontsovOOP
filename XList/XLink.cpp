@@ -1,23 +1,29 @@
 // XLink
 
 template <class T>
-void XLink<T> :: SetNext( XLink<T> * const next )
+void XLink<T> :: SetNext( XLink<T> * const & next )
 {
 	m_Next = next;
 }
 
 template <class T>
-void XLink<T> :: SetPrev( XLink<T> * const prev )
+void XLink<T> :: SetPrev( XLink<T> * const & prev )
 {
 	m_Prev = prev;
 }
 
 template <class T>
-XLink<T> :: XLink( T const & NewElement, XLink<T> * prev, XLink<T> * next )
+XLink<T> :: XLink( T const & NewElement, XLink<T> * const & prev, XLink<T> * const & next )
 {
-	m_Data = new T;
-	++MemoryWatcher :: Datas;
-	*m_Data = NewElement;
+	m_Data = new T( NewElement );
+	m_Prev = prev;
+	m_Next = next;
+}
+
+template <class T>
+XLink<T> :: XLink( T * NewElement, XLink<T> * const & prev, XLink<T> * const & next )
+{
+	m_Data = NewElement;
 	m_Prev = prev;
 	m_Next = next;
 }
@@ -26,7 +32,6 @@ template <class T>
 XLink<T> :: ~XLink()
 {
 	delete m_Data;
-	--MemoryWatcher :: Datas;
 }
 
 template <class T>
@@ -51,19 +56,19 @@ XLink<T> * XLink<T> :: GetPrevPointer()
 template <class T>
 XIterator<T> & XIterator<T> :: operator++ ()
 {
-	m_Iterator = m_Iterator->GetNextPointer();
+	m_Iterator = m_Iterator -> GetNextPointer();
 	return *this;
 }
 
 template <class T>
 XIterator<T> & XIterator<T> :: operator-- ()
 {
-	m_Iterator = m_Iterator->GetPrevPointer();
+	m_Iterator = m_Iterator -> GetPrevPointer();
 	return *this;
 }
 
 template <class T>
-XIterator<T> & XIterator<T> :: operator= (XLink<T> * newXLink)
+XIterator<T> & XIterator<T> :: operator= (XLink<T> * const & newXLink)
 {
 	m_Iterator = newXLink;
 	return *this;
@@ -76,13 +81,19 @@ T & XIterator<T> :: operator*()
 }
 
 template <class T>
+bool XIterator<T> :: isnotNull()
+{
+	return ( m_Iterator != NULL ? true : false );
+}
+
+template <class T>
 XIterator<T> :: XIterator()
 {
 	m_Iterator = NULL;
 }
 
 template <class T>
-XIterator<T> :: XIterator( XLink<T> * newXLink )
+XIterator<T> :: XIterator( XLink<T> * const & newXLink )
 {
 	m_Iterator = newXLink;
 }
