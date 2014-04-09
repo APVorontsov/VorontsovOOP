@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "Named.h"
+#include "Shape.h"
 
 int Shape::sm_Count = 0;
 
@@ -96,7 +97,7 @@ int main()
 		plA.AddPoint( p1 );
 		plA.AddPoint( p2 );
 		plA.AddPoint( p3 );
-		plA.PrintName();
+		std::cout << plA.Print() << std::endl;
 		Circle c1( "Circel #1", 1.5, -0.5, 3.14 );
 		Rect r1( "Rect #1", -58, 96.37589964, 35, 0.2 );
 		Square s1( "Square #1", 0, 0, 1.414 );
@@ -110,20 +111,20 @@ int main()
 		listF.PushBack( p3 );
 		listF.PushBack( s1 );
 
-		std :: cout << "\nListF contains " << listF.GetSize() << " elements" << std :: endl;
+		std::cout << "\nListF contains " << listF.GetSize() << " elements" << std::endl;
 		for( auto it = listF.GetFrontIterator(); it.isnotNull(); ++it )
-			(*it).PrintName();
-		std :: cout << "There are created " << Shape :: GetCount() << " shapes" << std :: endl; 
+			std::cout << (*it).Print();
+		std::cout << "There are created " << Shape::GetCount() << " shapes" << std::endl; 
 		listF.Erase();
 	}
 
-	if ( Shape :: GetCount() == 0 )
-		std :: cout << "EVERYHING IS ALRIGHT\n" << std :: endl;
+	if ( Shape::GetCount() == 0 )
+		std::cout << "EVERYHING IS ALRIGHT\n" << std::endl;
 	else
-		std :: cout << "WE'VE GOT " << Shape :: GetCount() << " PROBLEMS\n" << std :: endl;
+		std::cout << "WE'VE GOT " << Shape::GetCount() << " PROBLEMS\n" << std::endl;
 
 	{
-		XList< Shape > listG;
+		XList< Shape * > listG;
 
 		Point * p1 = new Point( "Point #1", 1.0, 0.0 );
 		Point * p2 = new Point( "Point #2", 0.0, 2.0 );
@@ -132,7 +133,7 @@ int main()
 		plA->AddPoint( *p1 );
 		plA->AddPoint( *p2 );
 		plA->AddPoint( *p3 );
-		plA->PrintName();
+		std::cout << plA->Print() << std::endl;
 		Circle * c1 = new Circle( "Circel #1", 1.5, -0.5, 3.14 );
 		Rect * r1 = new Rect( "Rect #1", -58, 96.37589964, 35, 0.2 );
 		Square * s1 = new Square( "Square #1", 0, 0, 1.414 );
@@ -145,16 +146,23 @@ int main()
 		listG.PushBack( p2 );
 		listG.PushBack( p3 );
 
-		std :: cout << "\nListG contains " << listG.GetSize() << " elements" << std :: endl;
+		std::cout << "\nListG contains " << listG.GetSize() << " elements" << std::endl;
 		for( auto it = listG.GetFrontIterator(); it.isnotNull(); ++it )
-			(*it).PrintName();
-		std :: cout << "There are created " << Shape :: GetCount() << " shapes" << std :: endl; 
-//		listG.Erase();
+			std::cout << (*it) -> Print();
+		std::cout << "There are created " << Shape::GetCount() << " shapes" << std::endl; 
+
+		delete p1;
+		delete p2;
+		delete p3;
+		delete plA;
+		delete c1;
+		delete r1;
+		delete s1;
 	}
-	if ( Shape :: GetCount() == 0 )
-		std :: cout << "EVERYHING IS ALRIGHT\n" << std :: endl;
+	if ( Shape::GetCount() == 0 )
+		std::cout << "EVERYHING IS ALRIGHT\n" << std::endl;
 	else
-		std :: cout << "WE'VE GOT " << Shape :: GetCount() << " PROBLEMS\n" << std :: endl;
+		std::cout << "WE'VE GOT " << Shape::GetCount() << " PROBLEMS\n" << std::endl;
 
 	return 0;
 }
